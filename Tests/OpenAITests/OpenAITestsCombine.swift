@@ -21,7 +21,7 @@ final class OpenAITestsCombine: XCTestCase {
     override func setUp() {
         super.setUp()
         self.urlSession = URLSessionMock()
-        let configuration = OpenAI.Configuration(token: "foo", organizationIdentifier: "bar", timeoutInterval: 14)
+        let configuration = OpenAI.Configuration(token: { "foo" }, organizationIdentifier: "bar", timeoutInterval: 14)
         self.openAI = OpenAI(configuration: configuration, session: self.urlSession)
     }
     
