@@ -35,10 +35,10 @@ public enum VisionContent: Codable, Equatable {
             case low, high, auto
         }
 
-        let detail: Detail
-        let url: String
+        public let detail: Detail
+        public let url: String
 
-        static func base64Encoded(image: Data, detail: Detail) -> Self {
+        public static func base64Encoded(image: Data, detail: Detail) -> Self {
             return .init(detail: detail, url: image.base64EncodedString(options: .lineLength64Characters))
         }
     }
