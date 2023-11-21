@@ -65,7 +65,7 @@ public struct Chat: Codable, Equatable {
     public let role: Role
 
     public enum Content: Codable, Equatable {
-        case vision(VisionContent)
+        case vision([VisionContent])
         case text(String)
 
         public func encode(to encoder: Encoder) throws {
