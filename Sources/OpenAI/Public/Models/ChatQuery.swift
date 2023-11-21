@@ -39,7 +39,7 @@ public enum VisionContent: Codable, Equatable {
         public let url: String
 
         public static func base64Encoded(image: Data, detail: Detail) -> Self {
-            return .init(detail: detail, url: image.base64EncodedString(options: .lineLength64Characters))
+            return .init(detail: detail, url: "data:image/jpeg;base64,"+image.base64EncodedString(options: .lineLength64Characters))
         }
     }
 
