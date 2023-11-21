@@ -67,6 +67,21 @@ public struct Chat: Codable, Equatable {
     public enum Content: Codable, Equatable {
         case vision(VisionContent)
         case text(String)
+
+        public func encode(to encoder: Encoder) throws {
+            var container = encoder.singleValueContainer()
+            switch self {
+            case .vision(let content):
+                try container.encode(content)
+            case .text(let text):
+                try container.encode(text)
+            }
+        }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.singleValueContainer()
+            self = .text(try container.decode(String.self))
+        }
     }
     /// The contents of the message. `content` is required for all messages except assistant messages with function calls.
     public let content: Content?
