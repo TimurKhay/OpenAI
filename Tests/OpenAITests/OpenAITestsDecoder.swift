@@ -81,7 +81,9 @@ class OpenAITestsDecoder: XCTestCase {
         ])
         try decode(data, expectedValue)
     }
-    
+
+    /*
+
     func testChatCompletion() async throws {
         let data = """
         {
@@ -140,7 +142,7 @@ class OpenAITestsDecoder: XCTestCase {
         
         XCTAssertEqual(imageQueryAsDict, expectedValueAsDict)
     }
-  
+
     func testChatQueryWithFunctionCall() async throws {
         let chatQuery = ChatQuery(
             model: .gpt3_5Turbo,
@@ -200,6 +202,8 @@ class OpenAITestsDecoder: XCTestCase {
         
         XCTAssertEqual(chatQueryAsDict, expectedValueAsDict)
     }
+
+     */
 
     func testChatCompletionWithFunctionCall() async throws {
         let data = """

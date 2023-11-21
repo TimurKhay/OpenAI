@@ -20,10 +20,56 @@ public struct ResponseFormat: Codable, Equatable {
     }
 }
 
+public enum VisionContent: Codable, Equatable {
+    case text(String)
+    case imageURL(ImageURL)
+
+    enum CodingKeys: String, CodingKey {
+        case type
+        case text
+        case imageURL = "image_url"
+    }
+
+    public struct ImageURL: Codable, Equatable {
+        public enum Detail: String, Codable, Equatable {
+            case low, high, auto
+        }
+
+        let detail: Detail
+        let url: String
+
+        static func base64Encoded(image: Data, detail: Detail) -> Self {
+            return .init(detail: detail, url: image.base64EncodedString(options: .lineLength64Characters))
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case let .imageURL(imageURL):
+            try container.encode(CodingKeys.imageURL.rawValue, forKey: .type)
+            try container.encode(imageURL, forKey: .imageURL)
+        case let .text(text):
+            try container.encode(CodingKeys.text.rawValue, forKey: .type)
+            try container.encode(text, forKey: .text)
+        }
+
+    }
+
+    public init(from decoder: Decoder) throws {
+        fatalError()
+    }
+}
+
 public struct Chat: Codable, Equatable {
     public let role: Role
+
+    public enum Content: Codable, Equatable {
+        case vision(VisionContent)
+        case text(String)
+    }
     /// The contents of the message. `content` is required for all messages except assistant messages with function calls.
-    public let content: String?
+    public let content: Content?
     /// The name of the author of this message. `name` is required if role is `function`, and it should be the name of the function whose response is in the `content`. May contain a-z, A-Z, 0-9, and underscores, with a maximum length of 64 characters.
     public let name: String?
     public let functionCall: ChatFunctionCall?
@@ -42,7 +88,7 @@ public struct Chat: Codable, Equatable {
         case functionCall = "function_call"
     }
     
-    public init(role: Role, content: String? = nil, name: String? = nil, functionCall: ChatFunctionCall? = nil) {
+    public init(role: Role, content: Content? = nil, name: String? = nil, functionCall: ChatFunctionCall? = nil) {
         self.role = role
         self.content = content
         self.name = name

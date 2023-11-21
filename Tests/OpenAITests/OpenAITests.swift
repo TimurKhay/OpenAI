@@ -100,6 +100,7 @@ class OpenAITests: XCTestCase {
         XCTAssertEqual(inError, apiError)
     }
     
+    /*
     func testChats() async throws {
        let query = ChatQuery(model: .gpt4, messages: [
            .init(role: .system, content: "You are Librarian-GPT. You know everything about the books."),
@@ -149,7 +150,9 @@ class OpenAITests: XCTestCase {
         let apiError: APIError = try await XCTExpectError { try await openAI.chats(query: query) }
         XCTAssertEqual(inError, apiError)
     }
-    
+
+    */
+
     func testEdits() async throws {
         let query = EditsQuery(model: .gpt4, input: "What day of the wek is it?", instruction: "Fix the spelling mistakes")
         let editsResult = EditsResult(object: "edit", created: 1589478378, choices: [

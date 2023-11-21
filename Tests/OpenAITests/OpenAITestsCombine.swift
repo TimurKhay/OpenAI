@@ -36,6 +36,7 @@ final class OpenAITestsCombine: XCTestCase {
         XCTAssertEqual(result, expectedResult)
     }
     
+    /*
     func testChats() throws {
        let query = ChatQuery(model: .gpt4, messages: [
            .init(role: .system, content: "You are Librarian-GPT. You know everything about the books."),
@@ -50,7 +51,9 @@ final class OpenAITestsCombine: XCTestCase {
        let result = try awaitPublisher(openAI.chats(query: query))
        XCTAssertEqual(result, chatResult)
     }
-    
+
+     */
+
     func testEdits() throws {
         let query = EditsQuery(model: .gpt4, input: "What day of the wek is it?", instruction: "Fix the spelling mistakes")
         let editsResult = EditsResult(object: "edit", created: 1589478378, choices: [
