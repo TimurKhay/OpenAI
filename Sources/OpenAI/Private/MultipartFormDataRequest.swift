@@ -25,7 +25,7 @@ final class MultipartFormDataRequest<ResultType> {
 
 extension MultipartFormDataRequest: URLRequestBuildable {
     
-    func build(token: String, organizationIdentifier: String?, timeoutInterval: TimeInterval) throws -> URLRequest {
+    func build(token: String, organizationIdentifier: String?, timeoutInterval: TimeInterval, customHeaders: [String: String]) throws -> URLRequest {
         var request = URLRequest(url: gateway)
         let boundary: String = UUID().uuidString
         request.timeoutInterval = timeoutInterval
@@ -36,6 +36,11 @@ extension MultipartFormDataRequest: URLRequestBuildable {
         if let organizationIdentifier {
             request.setValue(organizationIdentifier, forHTTPHeaderField: "OpenAI-Organization")
         }
+        
+        for (headerField, value) in customHeaders {
+            request.setValue(value, forHTTPHeaderField: headerField)
+        }
+        
         request.httpBody = body.encode(boundary: boundary)
         return request
     }
